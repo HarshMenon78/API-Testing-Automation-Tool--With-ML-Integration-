@@ -1,0 +1,17 @@
+requests
+flask
+flask-cors
+scikit-learn
+pandas
+numpy
+joblib
+beautifulsoup4
+pytest
+pytest-html
+matplotlib
+seaborn
+jinja2
+requests
+pandas
+scikit-learn
+flask
