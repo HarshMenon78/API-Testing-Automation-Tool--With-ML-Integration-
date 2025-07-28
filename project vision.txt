@@ -1,0 +1,16 @@
+Project Vision: API Testing Automation Tool with ML
+
+This project aims to build a lightweight automation tool that enables intelligent testing of APIs by incorporating machine learning.
+
+Key Objectives:
+- Accept API request data via a UI or JSON interface.
+- Automatically analyze or predict expected responses using ML.
+- Offer status reporting, logs, and analysis of passed/failed test cases.
+- Eventually integrate learning from past tests to optimize new ones.
+
+**Phase 1 Goal**: Build a working Flask API that accepts POST requests, runs dummy test logic, and returns a structured response.
+
+**Future Enhancements**:
+- ML integration for smart response validation.
+- Authentication/token handling.
+- UI for manual + automated test trigger.
