@@ -15,7 +15,5 @@ def test_api():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-from source_code.api import app
-
 if __name__ == '__main__':
     app.run(debug=True)
