@@ -1,0 +1,17 @@
+{
+  "name": "Sample GET Test",
+  "request": {
+    "method": "GET",
+    "url": "https://jsonplaceholder.typicode.com/posts/1",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  },
+  "expected": {
+    "status_code": 200,
+    "body": {
+      "userId": 1,
+      "id": 1
+    }
+  }
+}
