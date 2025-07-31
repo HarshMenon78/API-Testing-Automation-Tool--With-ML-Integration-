@@ -1,5 +1,12 @@
-from source_code.tester import run_test_case
+import os
+import sys
+
+# Dynamically add the root project directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from source_code.main import app
+from source_code.tester import run_test_case
+
 import json
 import os
 
