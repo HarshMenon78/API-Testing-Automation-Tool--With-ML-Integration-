@@ -14,4 +14,4 @@ def test_simple_case():
     with open("tests/test_cases/test_case_1.json") as f:
         data = json.load(f)
     result = run_test_case(data, app)
-    assert result["status"] == "pass"
+    assert result["status"] == "Test Passed"

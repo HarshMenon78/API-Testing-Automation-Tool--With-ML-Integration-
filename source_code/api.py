@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from tester import run_test_case
+from .tester import run_test_case
 
 app = Flask(__name__)
 
