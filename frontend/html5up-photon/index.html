@@ -16,23 +16,31 @@
 		</header>
 
 		<!-- Main Form Section -->
-		<section id="test-form-section" class="wrapper">
-			<div class="inner">
-				<h2>Run Your API Test</h2>
-				<form id="test-form">
-					<div class="fields">
-						<div class="field">
-							<label for="testcase">Enter Test Case Name (e.g. test_case_1.json):</label>
-							<input type="text" name="testcase" id="testcase" placeholder="test_case_1.json" required />
-						</div>
-					</div>
-					<ul class="actions">
-						<li><input type="submit" value="Run Test" class="primary" /></li>
-					</ul>
-				</form>
-				<div id="result" style="margin-top: 20px;"></div>
-			</div>
-		</section>
+        <section id="test-form-section">
+        	<div class="inner">
+        		<header class="major">
+        			<h2>Run a Test Case</h2>
+        		</header>
+
+        		<form id="test-form">
+        			<div class="fields">
+        				<div class="field">
+        					<label for="testcase">Enter Test Case (JSON or text)</label>
+        					<textarea name="testcase" id="testcase" rows="6" placeholder='{"input": "value"}'></textarea>
+        				</div>
+        				<div class="field">
+        					<label for="file-upload">Or Upload JSON File</label>
+        					<input type="file" id="file-upload" accept=".json" />
+        				</div>
+        			</div>
+        			<ul class="actions">
+        				<li><input type="submit" value="Run Test Case" class="primary" /></li>
+        			</ul>
+        		</form>
+
+        		<div id="result"></div>
+        	</div>
+        </section>
 
 		<!-- Footer -->
 		<footer id="footer" class="wrapper style1-alt">
@@ -52,21 +60,32 @@
 		<script src="assets/js/main.js"></script>
 
 		<!-- Custom JS -->
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				document.getElementById('test-form').addEventListener('submit', function (event) {
-					event.preventDefault();
-					const testcase = document.getElementById('testcase').value;
-					const resultDiv = document.getElementById('result');
-					resultDiv.innerHTML = `<p>Running test case: <strong>${testcase}</strong></p>`;
+        <script>
+        	document.getElementById('file-upload').addEventListener('change', function(event) {
+        		const file = event.target.files[0];
+        		if (file && file.name.endsWith('.json')) {
+        			const reader = new FileReader();
+        			reader.onload = function(e) {
+        				document.getElementById('testcase').value = e.target.result;
+        			};
+        			reader.readAsText(file);
+        		} else {
+        			alert('Please upload a valid .json file');
+        		}
+        	});
 
-					// Simulate API call (replace with fetch to your backend later)
-					setTimeout(() => {
-						resultDiv.innerHTML += `<p>Test case completed successfully!</p>`;
-					}, 2000);
-				});
-			});
-		</script>
+        	document.getElementById('test-form').addEventListener('submit', function(event) {
+        		event.preventDefault();
+        		const testcase = document.getElementById('testcase').value;
+        		const resultDiv = document.getElementById('result');
+        		resultDiv.innerHTML = `<p>Running test case...</p>`;
+
+        		// Simulate API call (replace with fetch() for real API)
+        		setTimeout(() => {
+        			resultDiv.innerHTML += `<p>Test case completed successfully!</p><pre>${testcase}</pre>`;
+        		}, 1500);
+        	});
+        </script>
 
 	</body>
 </html>
