@@ -61,31 +61,59 @@
 
 		<!-- Custom JS -->
         <script>
-        	document.getElementById('file-upload').addEventListener('change', function(event) {
-        		const file = event.target.files[0];
-        		if (file && file.name.endsWith('.json')) {
-        			const reader = new FileReader();
-        			reader.onload = function(e) {
-        				document.getElementById('testcase').value = e.target.result;
-        			};
-        			reader.readAsText(file);
-        		} else {
-        			alert('Please upload a valid .json file');
-        		}
-        	});
+          document.getElementById("runTest").addEventListener("click", async function () {
+            const fileInput = document.getElementById("jsonFile");
+            const manualInput = document.getElementById("manualInput").value;
+            const resultBox = document.getElementById("resultBox");
 
-        	document.getElementById('test-form').addEventListener('submit', function(event) {
-        		event.preventDefault();
-        		const testcase = document.getElementById('testcase').value;
-        		const resultDiv = document.getElementById('result');
-        		resultDiv.innerHTML = `<p>Running test case...</p>`;
+            let testData;
 
-        		// Simulate API call (replace with fetch() for real API)
-        		setTimeout(() => {
-        			resultDiv.innerHTML += `<p>Test case completed successfully!</p><pre>${testcase}</pre>`;
-        		}, 1500);
-        	});
+            // Read .json file if uploaded
+            if (fileInput.files.length > 0) {
+              const file = fileInput.files[0];
+              const text = await file.text();
+              try {
+                testData = JSON.parse(text);
+              } catch (err) {
+                resultBox.innerHTML = `<div class="error">❌ Invalid JSON file.</div>`;
+                return;
+              }
+            } else if (manualInput.trim() !== "") {
+              try {
+                testData = JSON.parse(manualInput);
+              } catch (err) {
+                resultBox.innerHTML = `<div class="error">❌ Invalid manual JSON input.</div>`;
+                return;
+              }
+            } else {
+              resultBox.innerHTML = `<div class="error">❌ Please provide a test case.</div>`;
+              return;
+            }
+
+            // Simulate a test result (you can replace this with real fetch call to your backend)
+            const fakeApiResponse = {
+              url: testData.url || "http://localhost:8000/api/example",
+              method: testData.method || "POST",
+              tested: testData.assertions || ["status", "response body"],
+              passed: true,
+              message: "All assertions passed.",
+              execution_time: "112ms"
+            };
+
+            // Display the result
+            resultBox.innerHTML = `
+              <div class="test-result ${fakeApiResponse.passed ? "success" : "error"}">
+                <h3>${fakeApiResponse.passed ? "✅ Test Passed" : "❌ Test Failed"}</h3>
+                <p><strong>URL Tested:</strong> ${fakeApiResponse.url}</p>
+                <p><strong>Method:</strong> ${fakeApiResponse.method}</p>
+                <p><strong>Aspects Tested:</strong> ${fakeApiResponse.tested.join(", ")}</p>
+                <p><strong>Execution Time:</strong> ${fakeApiResponse.execution_time}</p>
+                <p><strong>Message:</strong> ${fakeApiResponse.message}</p>
+              </div>
+            `;
+          });
         </script>
+
 
 	</body>
 </html>
