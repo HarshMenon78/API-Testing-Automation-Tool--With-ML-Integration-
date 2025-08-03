@@ -62,14 +62,15 @@
 
 		<!-- Custom JS -->
         <script>
-          document.getElementById("runTest").addEventListener("click", async function () {
-            const fileInput = document.getElementById("jsonFile");
-            const manualInput = document.getElementById("manualInput").value;
+          document.getElementById("test-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById("file-upload");
+            const manualInput = document.getElementById("testcase").value;
             const resultBox = document.getElementById("resultBox");
 
             let testData;
 
-            // Read .json file if uploaded
             if (fileInput.files.length > 0) {
               const file = fileInput.files[0];
               const text = await file.text();
@@ -91,7 +92,7 @@
               return;
             }
 
-            // Simulate a test result (you can replace this with real fetch call to your backend)
+            // Simulated test output (replace with real backend call later)
             const fakeApiResponse = {
               url: testData.url || "http://localhost:8000/api/example",
               method: testData.method || "POST",
@@ -101,7 +102,6 @@
               execution_time: "112ms"
             };
 
-            // Display the result
             resultBox.innerHTML = `
               <div class="test-result ${fakeApiResponse.passed ? "success" : "error"}">
                 <h3>${fakeApiResponse.passed ? "✅ Test Passed" : "❌ Test Failed"}</h3>
@@ -114,6 +114,7 @@
             `;
           });
         </script>
+
 
 
 	</body>
