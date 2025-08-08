@@ -142,54 +142,62 @@
 
         <!-- Your custom script -->
         <script>
-          document.getElementById("runTest").addEventListener("click", async function () {
-            const fileInput = document.getElementById("jsonFile");
-            const manualInput = document.getElementById("manualInput").value;
-            const resultBox = document.getElementById("resultBox");
+        document.getElementById("runTest").addEventListener("click", async function () {
+          const fileInput = document.getElementById("jsonFile");
+          const manualInput = document.getElementById("manualInput").value;
+          const resultBox = document.getElementById("resultBox");
 
-            let testData;
+          let testData;
 
-            if (fileInput.files.length > 0) {
-              const file = fileInput.files[0];
-              const text = await file.text();
-              try {
-                testData = JSON.parse(text);
-              } catch (err) {
-                resultBox.innerHTML = `<div class="test-result error">❌ Invalid JSON file.</div>`;
-                return;
-              }
-            } else if (manualInput.trim() !== "") {
-              try {
-                testData = JSON.parse(manualInput);
-              } catch (err) {
-                resultBox.innerHTML = `<div class="test-result error">❌ Invalid manual JSON input.</div>`;
-                return;
-              }
-            } else {
-              resultBox.innerHTML = `<div class="test-result error">❌ Please provide a test case.</div>`;
+          // Load JSON from file or textarea
+          if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const text = await file.text();
+            try {
+              testData = JSON.parse(text);
+            } catch (err) {
+              resultBox.innerHTML = `<div class="test-result error">❌ Invalid JSON file.</div>`;
               return;
             }
+          } else if (manualInput.trim() !== "") {
+            try {
+              testData = JSON.parse(manualInput);
+            } catch (err) {
+              resultBox.innerHTML = `<div class="test-result error">❌ Invalid manual JSON input.</div>`;
+              return;
+            }
+          } else {
+            resultBox.innerHTML = `<div class="test-result error">❌ Please provide a test case.</div>`;
+            return;
+          }
 
-            const fakeApiResponse = {
-              url: testData.url || "http://localhost:8000/api/example",
-              method: testData.method || "POST",
-              tested: testData.assertions || ["status", "response body"],
-              passed: true,
-              message: "All assertions passed.",
-              execution_time: "112ms"
-            };
+          try {
+            // Send test case to backend
+            const res = await fetch("/run-test", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(testData)
+            });
 
+            const apiResponse = await res.json();
+
+            // Show actual backend response
             resultBox.innerHTML = `
-              <div class="test-result ${fakeApiResponse.passed ? "success" : "error"}">
-                <h3>${fakeApiResponse.passed ? "✅ Test Passed" : "❌ Test Failed"}</h3>
-                <p><strong>URL Tested:</strong> ${fakeApiResponse.url}</p>
-                <p><strong>Method:</strong> ${fakeApiResponse.method}</p>
-                <p><strong>Aspects Tested:</strong> ${fakeApiResponse.tested.join(", ")}</p>
-                <p><strong>Execution Time:</strong> ${fakeApiResponse.execution_time}</p>
-                <p><strong>Message:</strong> ${fakeApiResponse.message}</p>
+              <div class="test-result ${apiResponse.status === "Test Passed" ? "success" : "error"}">
+                <h3>${apiResponse.status === "Test Passed" ? "✅ Test Passed" : "❌ Test Failed"}</h3>
+                <p><strong>URL Tested:</strong> ${apiResponse.url_tested}</p>
+                <p><strong>Method:</strong> ${apiResponse.method}</p>
+                <p><strong>Status Code:</strong> ${apiResponse.status_code}</p>
+                <p><strong>Execution Time:</strong> ${apiResponse.execution_time_ms} ms</p>
+                <p><strong>Message:</strong> ${apiResponse.message}</p>
+                <pre>${JSON.stringify(apiResponse.response_body, null, 2)}</pre>
               </div>
             `;
-          });
+          } catch (err) {
+            resultBox.innerHTML = `<div class="test-result error">❌ Error: ${err.message}</div>`;
+          }
+        });
         </script>
+
 	</body>
 </html>
