@@ -173,7 +173,7 @@
 
           try {
             // Send test case to backend
-            const res = await fetch("/run-test", {
+            const res = await fetch("http://localhost:5000/test", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(testData)

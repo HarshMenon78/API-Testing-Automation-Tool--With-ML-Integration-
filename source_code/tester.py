@@ -6,10 +6,11 @@ def run_test_case(data, model=None):
     Runs an API test case and returns actual results.
     data should include: url, method, headers, body
     """
-    url = data.get("url")
-    method = data.get("method", "GET").upper()
-    headers = data.get("headers", {})
-    body = data.get("body", None)
+    req = data.get("request", {})
+    url = req.get("url")
+    method = req.get("method", "GET").upper()
+    headers = req.get("headers", {})
+    body = req.get("body", None)
 
     start_time = time.time()
 
