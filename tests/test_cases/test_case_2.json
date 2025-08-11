@@ -1,12 +1,14 @@
 {
   "name": "Sample GET Post",
   "description": "Test GET request to fetch a post from JSONPlaceholder API",
-  "url": "https://jsonplaceholder.typicode.com/posts/1",
-  "method": "GET",
-  "headers": {
-    "Accept": "application/json"
+  "request": {
+    "method": "GET",
+    "url": "https://jsonplaceholder.typicode.com/posts/1",
+    "headers": {
+      "Accept": "application/json"
+    },
+    "body": null
   },
-  "body": null,
   "expectedStatus": 200,
   "expectedBody": {
     "userId": 1,
