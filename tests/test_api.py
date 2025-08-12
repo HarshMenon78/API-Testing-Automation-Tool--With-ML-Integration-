@@ -35,4 +35,3 @@ def test_simple_case():
         result = run_test_case(data, app)
         print("Local Test Result:", result)
         assert result["status"] == "Test Passed"
-
