@@ -21,7 +21,6 @@ API Testing Automation Tool (With ML Integration)/
 │   └── train_model.py           -> Script to train and save the ML model
 ├── source_code/                 -> Backend source code
 │   ├── api.py                   -> API endpoints for frontend-backend communication
-│   ├── ml/                      -> ML-related utility code (currently empty but can store model files)
 │   ├── tester.py                -> API testing automation logic
 │   ├── utilis.py                -> Utility functions
 │   └── __init__.py              -> Package initialization file
