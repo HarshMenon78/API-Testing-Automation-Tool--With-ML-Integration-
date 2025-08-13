@@ -46,7 +46,7 @@ Usage Instructions:
 
 2. **Train the ML model** (only needed once or when dataset changes) using :- python models/train_model.py
 
-3. **Run the backend server**: python main.py
+3. **Run the backend server**: python main.py (if not done , will show "❌ Error: NetworkError when attempting to fetch resource.")
 
 4. **Open the frontend**:
 - Navigate to the frontend folder or access via the backend's hosted URL.
