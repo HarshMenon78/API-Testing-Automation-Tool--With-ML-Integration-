@@ -94,8 +94,3 @@ API Testing Automation Tool (With ML Integration)/
 
 **Harsh Menon**  
 Developer | Machine Learning & Automation Enthusiast  
-
-📧 *Feel free to connect or contribute via pull requests!*
-```
-
-Would you like me to also add **badges** (e.g., Python version, license, build status) and a short **preview GIF/image section** at the top to give it a more polished GitHub look?
