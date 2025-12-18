@@ -1,5 +1,4 @@
 # API Testing Automation Tool (With ML Integration)
-=================================================
 
 ## Description:
 
